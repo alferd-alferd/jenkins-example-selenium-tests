@@ -103,7 +103,7 @@ class JenkinsHomepageTest {
         BufferedImage biTgt = ImageIO.read(tgtFile); // reads fileA into bufferedImage
         DataBuffer dbTgt = biTgt.getData().getDataBuffer();
         int sizeTgt = dbTgt.getSize();
-        int count = 0;
+        float count = 0;
         // compare data-buffer objects //
         if (sizeOrig == sizeTgt) { // checks the size of the both the bufferedImage
     
@@ -113,11 +113,17 @@ class JenkinsHomepageTest {
                     count = count + 1;
                 }
             }
-            percentage = (count * 100) / sizeOrig; // calculates matching percentage
+
+            if (count > 0) {
+                percentage = (1- (count / sizeOrig)) * 100; // calculates matching percentage
+            } else {
+                percentage = 100;
+            }
+            
         } else {
             System.out.println("Both the images are not of same size");
         }
-        System.out.println(percentage);
+        System.out.println("**--- Sample image is " + percentage + "% matching expected image ---**");
     }
 /* 
     @Test
